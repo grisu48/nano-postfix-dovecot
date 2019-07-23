@@ -1,0 +1,25 @@
+---
+# tasks file for Postfix-MySQL
+
+
+- name: Ensure vmail group exists
+  group: 
+    gid: 5000
+    name: vmail
+    state: present
+- name: Ensure vmail user exists
+  user:
+    uid: 5000
+    user: vmail
+    groups: vmail
+    state: present    
+
+- name: Install packages
+  apt:
+    name: ['postfix', 'postfix-doc', 'dovecot-imapd', 'mailutils']
+    state: present
+    
+- name: Writing postfix main configuration
+  template:
+    src: main.cf.j2
+    dest: /etc/postfix/main.cf

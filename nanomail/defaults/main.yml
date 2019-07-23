@@ -1,0 +1,11 @@
+---
+# defaults file for nanomail
+
+soft_bounce: "no"
+username: "vmail"
+hostname: "localhost"
+domain: "localhost"
+interfaces: "all"
+my_networks: "127.0.0.0/8"
+mailbox_base: "/srv/maildirs/"
+quota: "0"
