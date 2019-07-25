@@ -183,7 +183,7 @@ inet_interfaces = {{interfaces}}
 #
 # See also below, section "REJECTING MAIL FOR UNKNOWN LOCAL USERS".
 #
-#mydestination = $myhostname, localhost.$mydomain, localhost
+mydestination = $myhostname, localhost.$mydomain, localhost
 #mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain
 #mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain,
 #	mail.$mydomain, www.$mydomain, ftp.$mydomain
@@ -271,6 +271,7 @@ unknown_local_recipient_reject_code = 550
 #mynetworks_style = class
 #mynetworks_style = subnet
 #mynetworks_style = host
+mynetworks_style = {{mynetworks_style}}
 
 # Alternatively, you can specify the mynetworks list by hand, in
 # which case Postfix ignores the mynetworks_style setting.
@@ -369,7 +370,7 @@ mynetworks = {{my_networks}}
 # 
 # Specify 0 to disable the feature. Valid delays are 0..10.
 # 
-#in_flow_delay = 1s
+in_flow_delay = 1s
 
 # ADDRESS REWRITING
 #
@@ -688,9 +689,28 @@ smtpd_banner = $myhostname ESMTP $mail_name (Debian/GNU)
 inet_protocols = ipv4
 
 
+## Still ongoing work
+#canonical_maps = hash:/etc/postfix/canonical
+#relocated_maps = hash:/etc/postfix/relocated
+#sender_canonical_maps = hash:/etc/postfix/sender_canonical
+#transport_maps = hash:/etc/postfix/transport
+message_strip_characters = \0
+defer_transports =
+mailbox_command =
+mailbox_transport =
+mailbox_size_limit = 0
+message_size_limit = 0
+strict_8bitmime = no
+strict_rfc821_envelopes = no
+smtpd_delay_reject = yes
+smtpd_helo_required = no
+smtpd_client_restrictions =
+smtpd_helo_restrictions =
+#smtpd_sender_restrictions = hash:/etc/postfix/access
+smtpd_recipient_restrictions = permit_mynetworks,reject_unauth_destination
 
 
-virtual_mailbox_domains = {{hostname}}
+virtual_mailbox_domains = {{domain}}
 virtual_mailbox_maps = hash:/etc/postfix/virtual-mboxes
 virtual_mailbox_base = {{mailbox_base}}
 virtual_uid_maps = static:5000

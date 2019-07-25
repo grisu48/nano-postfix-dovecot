@@ -12,14 +12,35 @@
     uid: 5000
     user: vmail
     groups: vmail
-    state: present    
+    state: present
 
 - name: Install packages
   apt:
     name: ['postfix', 'postfix-doc', 'dovecot-imapd', 'mailutils']
     state: present
+- name: Ensure postfix is enabled
+  service:
+    name: postfix
+    state: started
+    enabled: yes
     
 - name: Writing postfix main configuration
   template:
     src: main.cf.j2
     dest: /etc/postfix/main.cf
+  notify: postfix_restart
+- name: Ensure virtual-mboxes exists
+  copy:
+    src: virtual-mboxes
+    dest: /etc/postfix/virtual-mboxes
+    owner: root
+    mode: 0644
+    force: no
+  notify: postfix_restart
+- name: Ensure maildir exists
+  file:
+    path: "{{ mailbox_base }}"
+    owner: vmail
+    group: vmail
+    mode: 0750
+    state: directory

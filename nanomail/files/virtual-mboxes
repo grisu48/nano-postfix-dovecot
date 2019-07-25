@@ -1,0 +1,14 @@
+# This file contains a list of all available virtual mailboxes.
+# Configure it to your needs. After configuring, don't forget to create the
+# hash file via
+# 
+#   postmap virtual-mboxes
+# 
+# Have fun!
+# 
+# Format:
+# user@domain	domain/user/
+# e.g.	phoenix@tardis.local	tardis.local/phoenix/
+# 
+# Important: Keep the / at the end to use Maildir!
+
